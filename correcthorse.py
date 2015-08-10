@@ -16,27 +16,52 @@ DEFAULTS = { 'phrases': 10,
              'length': 14,
              'separator': ' '}
 
-parser = argparse.ArgumentParser(prog="correcthorse.py", description="Generate passphrases of English words using PyCrypto random number generator.")
-parser.add_argument("num_words", nargs="?", default=DEFAULTS['words'], type=int, 
-                    help="Number of words to use in the passphrase. Not including number from --addnum. Default: %(default)s")
-parser.add_argument("min_length", nargs="?", default=DEFAULTS['length'], type=int,
-                    help="Minimum number of characters in the passphrase. Default: %(default)s")
-parser.add_argument("num_phrases", nargs="?", default=DEFAULTS['phrases'], type=int,
-                    help="Number of passphrases to generate.")
-parser.add_argument("-a", "--addnum", action="store_true", default=False,
-                    help="Include a randomly generated four-digit number in the passphrase." )
-parser.add_argument("-c", "--caps", action="store_true", default=False, 
-                    help="Randomly capitalize or title case words.")
-parser.add_argument("-s", "--separator", default=DEFAULTS['separator'], type=str,
-                    help='Character to use as separator in passphrase. Defaults to space. To randomly select between multiple separators, specify a string, like \'^b#@!\'.')
+parser = argparse.ArgumentParser(prog="correcthorse.py",
+                                 description="Generate passphrases of English words using PyCrypto random number generator.")
+parser.add_argument("num_words",
+                    nargs="?",
+                    default=DEFAULTS['words'],
+                    type=int, 
+                    help="number of words to use in the passphrase. Not including number from --addnum. Default: %(default)s")
+parser.add_argument("min_length",
+                    nargs="?",
+                    default=DEFAULTS['length'],
+                    type=int,
+                    help="minimum number of characters in the passphrase. Default: %(default)s")
+parser.add_argument("num_phrases",
+                    nargs="?",
+                    default=DEFAULTS['phrases'],
+                    type=int,
+                    help="number of passphrases to generate.")
+parser.add_argument("-a", "--addnum",
+                    action="store_true",
+                    default=False,
+                    help="include a randomly generated four-digit number in the passphrase." )
+parser.add_argument("-c", "--caps",
+                    action="store_true",
+                    default=False, 
+                    help="randomly capitalize or title case words.")
+parser.add_argument("-s", "--separator",
+                    default=DEFAULTS['separator'],
+                    type=str,
+                    help='character to use as separator in passphrase. Defaults to space. To randomly select between multiple separators, specify a string, like \'^b#@!\'.')
 
-def generate_passphrases(phrases=DEFAULTS['phrases'], words=DEFAULTS["words"], length=DEFAULTS["length"], separator=DEFAULTS['separator'], addnum=False, caps=False):
+def generate_passphrases(phrases=DEFAULTS['phrases'],
+                         words=DEFAULTS["words"],
+                         length=DEFAULTS["length"],
+                         separator=DEFAULTS['separator'],
+                         addnum=False,
+                         caps=False):
     passphrases = []
     for _ in range(phrases):
         passphrases.append(generate_passphrase(words, length, separator, addnum, caps))
     return passphrases
 
-def generate_passphrase(words=DEFAULTS["words"], length=DEFAULTS["length"], separator=DEFAULTS['separator'], addnum=False, caps=False):
+def generate_passphrase(words=DEFAULTS["words"],
+                        length=DEFAULTS["length"],
+                        separator=DEFAULTS['separator'],
+                        addnum=False,
+                        caps=False):
     phrase = []
     for _ in range(words):
         word = sample(WORD_LIST, 1)[0]
@@ -67,7 +92,8 @@ def generate_phrase_str(phrase, separator=DEFAULTS['separator']):
             phrase_str = phrase_str + phrase.pop(0) + sep
     return phrase_str
 
-def print_phrases(phrases=[["correct", "horse", "battery", "staple"]], separator=" "):
+def print_phrases(phrases=[["something", "has", "gone", "wrong"]],
+                  separator=" "):
     for phrase in phrases:
         print(phrase)
 
